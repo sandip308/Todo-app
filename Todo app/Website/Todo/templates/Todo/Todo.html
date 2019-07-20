@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <link rel="stylesheet" href="{% static 'Todo/Todo.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>My Todo</title>
+  </head>
+  <body>
+    <div class="Box">
+      <h1 style="color:rgb(255, 148, 77);font-size:20px;text-align:center;font-family:Times;">My ToDo List <i class="fa fa-pencil" style="color:black;padding-left:4px;" aria-hidden="true"></i></h1>
+      <form  action="{% url 'newtodo' %}" method="POST">
+        {% csrf_token %}
+        <div class="inputbox">
+          {{form.text}}
+          <label> <button type="submit" style="background-color: rgb(153, 255, 102);">Do it <i class="fa fa-check" aria-hidden="true"></i></button> </label>
+        </div>
+      </form>
+      <a href="{% url 'delete' %}">
+      <button type="button" class="but"  name="button">Delete completed <i class="fa fa-trash" style="padding-left:2px;" aria-hidden="true"></i></button>
+      </a>
+        <section style="padding:3px;">
+        </section>
+         <a href="{% url 'deleteall' %}">
+        <button type="button"class="Asg" name="button">Delete Everything <i class="fa fa-trash" style="padding-left:2px;" aria-hidden="true"></i></button>
+        </a>
+      <ul class="list-group tap">
+        {% for i in mytodo %}
+          {% if i.complete %}
+           <li class="list-group-item "id="todo-completed">{{i.text}}</li>
+
+          {% else %}
+           <a href="{% url 'add' i.id %}" style="text-decoration:none !important;"> <li class="list-group-item">{{i.text}}</li></a>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+  
+  </body>
+</html>
